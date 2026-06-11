@@ -1,0 +1,104 @@
+<html lang="pt-BR"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz GoxGain</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #001f3f, #0074D9);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .quiz-container {
+      text-align: center;
+      max-width: 500px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    h2 {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+    }
+    .quiz-options button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 15px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #FFC300;
+      color: #000;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .quiz-options button:hover {
+      background-color: #FFB000;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2 id="quiz-question">Você tem 18 anos?</h2>
+    <div class="quiz-options" id="quiz-options">
+      <button onclick="nextQuestion(1)" data-manus_clickable="true" data-manus_click_id="1">Sim</button>
+      <button onclick="nextQuestion(1)" data-manus_clickable="true" data-manus_click_id="2">Não</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      "Você gosta de se divertir online e receber vários benefícios?",
+      "Se você tivesse um ganho alto hoje, você faria o quê?",
+      "Você gosta de novidades e promoções quentes todos os dias?"
+    ];
+
+    const finalOptions = [
+      "Sim",
+      "Não"
+    ];
+
+    let currentStep = 0;
+
+    function nextQuestion(step) {
+      currentStep += step;
+
+      const questionEl = document.getElementById('quiz-question');
+      const optionsEl = document.getElementById('quiz-options');
+
+      if (currentStep === 1) {
+        questionEl.textContent = questions[0];
+        optionsEl.innerHTML = `
+          <button onclick="nextQuestion(1)">Sim</button>
+          <button onclick="nextQuestion(1)">Não</button>
+        `;
+      } else if (currentStep === 2) {
+        questionEl.textContent = questions[1];
+        optionsEl.innerHTML = `
+          <button onclick="nextQuestion(1)">Sairia com os amigos</button>
+          <button onclick="nextQuestion(1)">Curtiria uma balada</button>
+          <button onclick="nextQuestion(1)">Iria em um restaurante</button>
+          <button onclick="nextQuestion(1)">Faria outra coisa</button>
+        `;
+      } else if (currentStep === 3) {
+        questionEl.textContent = questions[2];
+        optionsEl.innerHTML = finalOptions.map(option => `
+          <button onclick="redirectToPromo()">${option}</button>
+        `).join('');
+      }
+    }
+
+    function redirectToPromo() {
+      window.location.href = "https://goxgain.site/promocao/";
+    }
+  </script>
+
+
+</body></html>
