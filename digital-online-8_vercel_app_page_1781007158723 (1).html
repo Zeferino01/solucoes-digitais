@@ -1,0 +1,447 @@
+<html lang="pt-PT"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reivindicar Bónus</title>
+    
+    <meta property="og:title" content="Reivindicar Bónus">
+    <meta property="og:description" content="Clique aqui para validar o seu IP e reivindicar o seu bónus de 5000MT.">
+    <meta property="og:image" content="https://i.im.ge/QM9PuLC/184638_r1778588477_1_95_1_425.jpg">
+    <meta property="og:type" content="website">
+    
+    <link rel="preload" as="image" href="https://i.im.ge/QM9PuLC/184638_r1778588477_1_95_1_425.jpg" fetchpriority="high">
+
+    <style>
+        :root {
+            --primary: #ff0055;
+            --secondary: #ff5500;
+            --bg-dark: #0a0a0d;
+            --card-bg: #12121a;
+            --success: #00ff88;
+            --border-soft: 4px;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* CAMADA GLOBAL INDESTRUTÍVEL: Cobre todo o ecrã */
+        .global-click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            text-decoration: none;
+            background: transparent;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-soft);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .img-box {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #1a1a24;
+            border-radius: var(--border-soft);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .promo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Duas Engrenagens */
+        .gears-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            margin: 10px 0;
+        }
+
+        .gear {
+            font-size: 42px;
+            display: inline-block;
+            line-height: 1;
+            user-select: none;
+            will-change: transform;
+        }
+
+        .gear-primary {
+            animation: rotate-right 2s linear infinite;
+            margin-right: -8px;
+            color: var(--primary);
+        }
+
+        .gear-secondary {
+            font-size: 32px;
+            animation: rotate-left 2s linear infinite;
+            margin-top: 12px;
+            color: var(--secondary);
+            opacity: 0.8;
+        }
+
+        @keyframes rotate-right {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate-left {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        /* Barra de Carregamento */
+        .loader-bar {
+            width: 100%;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.08);
+            margin: 15px 0 20px 0;
+            overflow: hidden;
+            border-radius: var(--border-soft);
+        }
+
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: fillProgress 5s linear forwards;
+        }
+
+        @keyframes fillProgress {
+            to { width: 100%; }
+        }
+
+        .title-status {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #f0f0f5;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            color: #9090a0;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Painel de Sucesso */
+        .success-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Presente e Explosão */
+        .gift-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px 0;
+            width: 100%;
+            height: 60px;
+        }
+
+        .gift-icon {
+            font-size: 2.8rem;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            animation: popOpen 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popOpen {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            70% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .bonus-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 5px 0 15px 0;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        /* Botões Flat */
+        .btn-action {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--border-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(255, 0, 85, 0.25);
+            border: none;
+        }
+
+        .timer-info {
+            font-size: 0.75rem;
+            color: #555565;
+            margin-top: 15px;
+        }
+
+        /* Partículas da Explosão */
+        .confetti-particle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 6px;
+            height: 12px;
+            border-radius: 2px;
+            opacity: 0;
+            z-index: 5;
+            pointer-events: none;
+            animation: particleExplode 1.8s cubic-bezier(0.1, 0.8, 0.25, 1) forwards;
+        }
+
+        @keyframes particleExplode {
+            0% {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            20% { opacity: 1; }
+            100% {
+                top: var(--y);
+                left: var(--x);
+                transform: translate(-50%, -50%) scale(0.5) rotate(var(--r));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://tracking.olabet.co.mz/C.ashx?btag=a_5297b_7c_&amp;affid=5108&amp;siteid=5297&amp;adid=7&amp;c=" target="_blank" class="global-click-overlay" id="overlay-trigger" data-manus_clickable="true" data-manus_click_id="1"></a>
+
+    <div class="container">
+        <div class="img-box">
+            <img src="https://i.im.ge/QM9PuLC/184638_r1778588477_1_95_1_425.jpg" alt="Bónus" class="promo-img" loading="eager" fetchpriority="high">
+        </div>
+
+        <div id="panel-processing" style="display: none;">
+            <div class="gears-container">
+                <span class="gear gear-primary">⚙️</span>
+                <span class="gear gear-secondary">⚙️</span>
+            </div>
+            <div class="title-status">A verificar bónus disponível...</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <div class="description">Aguarde 5 segundos enquanto validamos o seu IP.</div>
+            
+            <div class="btn-action" style="font-size: 0.9rem; padding: 10px 24px;">
+                Registar Agora
+            </div>
+        </div>
+
+        <div id="panel-success" class="success-panel" style="display: block;">
+            <div class="gift-container" id="explosion-zone">
+                <div class="gift-icon">🎁</div>
+            <div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 7.41578px; height: 8.38224px; --x: calc(50% + -6.601976211976495px); --y: calc(50% + -75.23232656521715px); --r: 92.14327685402509deg; animation-delay: 0.035011s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 15.3954px; --x: calc(50% + -30.316935352806446px); --y: calc(50% + -25.51040396025677px); --r: 227.22693289143342deg; animation-delay: 0.0376899s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 7.91116px; height: 7.65753px; --x: calc(50% + -3.725627574366528px); --y: calc(50% + -54.78566453322132px); --r: 331.5367803590535deg; animation-delay: 0.00814368s;"></div><div class="confetti-particle" style="background-color: rgb(255, 255, 255); width: 3px; height: 15.6006px; --x: calc(50% + -82.21522330185455px); --y: calc(50% + -26.331222737703506px); --r: -247.92712276206237deg; animation-delay: 0.0157159s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 3px; height: 19.2078px; --x: calc(50% + -1.9582895628420371px); --y: calc(50% + 109.07952795684342px); --r: 26.52335518201835deg; animation-delay: 0.0162532s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 3px; height: 15.8081px; --x: calc(50% + 13.765817994711618px); --y: calc(50% + 101.86546706681479px); --r: -83.28663818277738deg; animation-delay: 0.0270047s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 5.35579px; height: 8.28811px; --x: calc(50% + -96.05340711307485px); --y: calc(50% + 65.00206561369318px); --r: 242.26757328518397deg; animation-delay: 0.00205922s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 14.8268px; --x: calc(50% + -77.40504908455614px); --y: calc(50% + 51.64402423280392px); --r: -348.68803561369685deg; animation-delay: 0.0412919s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 12.0399px; --x: calc(50% + 19.121367162208774px); --y: calc(50% + 44.82546932626372px); --r: -110.93541677382854deg; animation-delay: 0.0230111s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 17.397px; --x: calc(50% + -28.826421846193163px); --y: calc(50% + -103.09760680015901px); --r: -159.90782687775885deg; animation-delay: 0.0165821s;"></div><div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 3px; height: 10.7953px; --x: calc(50% + 16.78175361404152px); --y: calc(50% + -81.52946980959449px); --r: 263.9648873416619deg; animation-delay: 0.0319471s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 23.5499px; --x: calc(50% + 105.22895074987922px); --y: calc(50% + -81.75973894417068px); --r: 236.33803065443738deg; animation-delay: 0.0333406s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 6.93789px; height: 7.25213px; --x: calc(50% + -102.19626486310571px); --y: calc(50% + -88.1420144672585px); --r: 344.65324051292873deg; animation-delay: 0.0155963s;"></div><div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 8.24139px; height: 7.69318px; --x: calc(50% + -76.52233699878369px); --y: calc(50% + -2.2211791853001266px); --r: -178.61430977706564deg; animation-delay: 0.0256359s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 17.8853px; --x: calc(50% + 81.1043242171992px); --y: calc(50% + -31.344017702089918px); --r: -58.365643942301176deg; animation-delay: 0.0217663s;"></div><div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 7.28269px; height: 6.29762px; --x: calc(50% + -110.32868367167147px); --y: calc(50% + 33.06311146790301px); --r: 156.3091044733941deg; animation-delay: 0.0207984s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 19.2337px; --x: calc(50% + -35.65379716858972px); --y: calc(50% + 31.602244532849618px); --r: -309.89002898763925deg; animation-delay: 0.0398725s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 19.7884px; --x: calc(50% + -47.75640720556162px); --y: calc(50% + 111.28506940066647px); --r: -307.76820758146954deg; animation-delay: 0.0242586s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 3px; height: 12.2409px; --x: calc(50% + -129.20242336026527px); --y: calc(50% + -61.65642286420486px); --r: 95.74064563147272deg; animation-delay: 0.0405047s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 6.88176px; height: 6.07315px; --x: calc(50% + 53.92916025150885px); --y: calc(50% + -30.647299143557102px); --r: 257.0972071313148deg; animation-delay: 0.0292268s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 17.5389px; --x: calc(50% + 160.73601962192652px); --y: calc(50% + 13.048223829148403px); --r: -100.85771658016552deg; animation-delay: 0.043245s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 6.94142px; height: 6.93433px; --x: calc(50% + 94.7995340442736px); --y: calc(50% + -40.997376731055134px); --r: 100.84393846057776deg; animation-delay: 0.0130792s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 14.4697px; --x: calc(50% + -94.96571822543153px); --y: calc(50% + 67.47905837395174px); --r: 238.38045031039155deg; animation-delay: 0.0440658s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 20.4396px; --x: calc(50% + 64.37397316504831px); --y: calc(50% + -12.537175636244953px); --r: -304.1181029496407deg; animation-delay: 0.0379187s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 15.2814px; --x: calc(50% + 80.08703346264983px); --y: calc(50% + 82.98826984051827px); --r: 164.77592529404058deg; animation-delay: 0.033894s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 5.49887px; height: 5.01586px; --x: calc(50% + -27.987442454582908px); --y: calc(50% + 23.84926713050189px); --r: 66.77138556413558deg; animation-delay: 0.0165074s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 15.0037px; --x: calc(50% + -75.11386660542303px); --y: calc(50% + -33.114588182319544px); --r: 278.3918036652259deg; animation-delay: 0.0281103s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 24.3605px; --x: calc(50% + -161.3691853729px); --y: calc(50% + 28.7743018302363px); --r: -165.527467912659deg; animation-delay: 0.045776s;"></div><div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 3px; height: 13.7254px; --x: calc(50% + -109.82444726008038px); --y: calc(50% + 38.46329425990125px); --r: -146.43409816976794deg; animation-delay: 0.0148276s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 12.4377px; --x: calc(50% + 72.45664119432308px); --y: calc(50% + 74.13329042713156px); --r: -290.7115768647543deg; animation-delay: 0.0483356s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 5.91894px; height: 7.49173px; --x: calc(50% + 84.01395416221202px); --y: calc(50% + 51.996735693047604px); --r: -109.40802943995965deg; animation-delay: 0.0364577s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 8.12686px; height: 6.09022px; --x: calc(50% + 137.74665472913583px); --y: calc(50% + 78.72411676062895px); --r: -359.1537211618693deg; animation-delay: 0.0136733s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 3px; height: 23.7981px; --x: calc(50% + 41.876463117276046px); --y: calc(50% + -67.91006710156371px); --r: 343.7929901473036deg; animation-delay: 0.0452506s;"></div><div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 5.40564px; height: 7.59039px; --x: calc(50% + 116.14716472187854px); --y: calc(50% + -36.3973890706571px); --r: 180.83255961944656deg; animation-delay: 0.0466194s;"></div><div class="confetti-particle" style="background-color: rgb(255, 85, 0); width: 3px; height: 16.5771px; --x: calc(50% + 66.78365178873011px); --y: calc(50% + 113.27385659731948px); --r: -165.9114463274881deg; animation-delay: 0.0294826s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 17.4407px; --x: calc(50% + -66.9532092157688px); --y: calc(50% + 97.90207834345533px); --r: -181.95048634684198deg; animation-delay: 0.0282454s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 6.01741px; height: 8.46532px; --x: calc(50% + 50.61942095519594px); --y: calc(50% + 72.53141442648842px); --r: -298.03631428811684deg; animation-delay: 0.0208577s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 5.80137px; height: 7.14003px; --x: calc(50% + 66.88220849516489px); --y: calc(50% + -90.32504292357476px); --r: 93.00534168795753deg; animation-delay: 0.0414311s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 19.8473px; --x: calc(50% + -75.54171045827346px); --y: calc(50% + 44.66872493824808px); --r: 194.9267932948835deg; animation-delay: 0.0495602s;"></div><div class="confetti-particle" style="background-color: rgb(255, 255, 255); width: 6.99707px; height: 5.72341px; --x: calc(50% + 68.49255610989553px); --y: calc(50% + 115.39317914008546px); --r: 266.25425251121464deg; animation-delay: 0.0320455s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 22.2691px; --x: calc(50% + -76.048314088506px); --y: calc(50% + 94.27131593701172px); --r: 90.17812619617087deg; animation-delay: 0.00252419s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 22.8672px; --x: calc(50% + -10.421769381382843px); --y: calc(50% + -51.0736285258502px); --r: 23.27906875437276deg; animation-delay: 0.0224943s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 10.6245px; --x: calc(50% + 99.37399680308964px); --y: calc(50% + 24.020686285552813px); --r: 159.30667407168266deg; animation-delay: 0.0361385s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 6.05791px; height: 6.21485px; --x: calc(50% + -128.47279797895553px); --y: calc(50% + 52.93164636011145px); --r: -27.924841865134226deg; animation-delay: 0.0185882s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 5.13476px; height: 8.57524px; --x: calc(50% + -85.35448726999373px); --y: calc(50% + 19.333006426674835px); --r: 281.57967808994647deg; animation-delay: 0.00206518s;"></div><div class="confetti-particle" style="background-color: rgb(0, 255, 136); width: 3px; height: 18.4673px; --x: calc(50% + -79.01750221303271px); --y: calc(50% + -94.10053121050832px); --r: -1.997848348855939deg; animation-delay: 0.0209415s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 3px; height: 19.9762px; --x: calc(50% + 52.85536295873556px); --y: calc(50% + 52.92122487772146px); --r: 309.4357481977578deg; animation-delay: 0.0303592s;"></div><div class="confetti-particle" style="background-color: rgb(255, 0, 85); width: 3px; height: 20.7533px; --x: calc(50% + -107.77086054561143px); --y: calc(50% + 63.772336317640196px); --r: -14.693502788518288deg; animation-delay: 0.0346553s;"></div><div class="confetti-particle" style="background-color: rgb(255, 204, 0); width: 6.96745px; height: 5.55039px; --x: calc(50% + 65.29384234577726px); --y: calc(50% + 17.358754156796145px); --r: -52.412187432170356deg; animation-delay: 0.0314618s;"></div><div class="confetti-particle" style="background-color: rgb(0, 188, 255); width: 3px; height: 19.7508px; --x: calc(50% + 50.655552640010484px); --y: calc(50% + 67.85915994515545px); --r: 306.96703246651deg; animation-delay: 0.0193552s;"></div></div>
+            <div class="title-status" style="color: var(--success);">🎉 PARABÉNS!</div>
+            
+            <span class="bonus-amount" id="dynamic-bonus">Bónus de 2620MT</span>
+            
+            <div class="description" style="color: #ffffff; margin-bottom: 20px;">
+                Registe-se agora para reivindicar o seu bónus.
+            </div>
+            
+            <div class="btn-action">
+                Reivindicar Bónus
+            </div>
+            
+            <div class="timer-info" id="countdown-text">
+                Redirecionando automaticamente em 10 segundos...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Link PrideBet unificado
+        const linkAfiliado = "https://tracking.olabet.co.mz/C.ashx?btag=a_5297b_7c_&affid=5108&siteid=5297&adid=7&c=";
+        let audioCtx = null;
+
+        // Desbloqueia as permissões de áudio no primeiro toque na tela
+        document.getElementById('overlay-trigger').addEventListener('click', () => {
+            if (!audioCtx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) {
+                    audioCtx = new AudioCtx();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        });
+        
+        function gerarValorBonus() {
+            const min = 2000;
+            const max = 5000;
+            const aleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+            const arredondado = Math.round(aleatorio / 5) * 5; 
+            document.getElementById('dynamic-bonus').innerText = `Bónus de ${arredondado}MT`;
+        }
+
+        function tocarSomExplosao() {
+            try {
+                if (!audioCtx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) audioCtx = new AudioCtx();
+                }
+                
+                const ctx = audioCtx;
+                if (!ctx) return;
+
+                // Frequência grave de impacto
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(180, ctx.currentTime);
+                osc1.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.4);
+                gain1.gain.setValueAtTime(0.6, ctx.currentTime);
+                gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start();
+                osc1.stop(ctx.currentTime + 0.4);
+
+                // Notas festivas agudas
+                const frequenciasFestivas = [523.25, 659.25, 783.99, 1046.50];
+                frequenciasFestivas.forEach((freq, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                    
+                    const atraso = index * 0.05;
+                    gain.gain.setValueAtTime(0, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime + atraso);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + atraso + 0.8);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + atraso);
+                    osc.stop(ctx.currentTime + atraso + 0.8);
+                });
+            } catch (e) {
+                console.log("Falha no áudio.");
+            }
+        }
+
+        function criarExplosaoFocada() {
+            const zona = document.getElementById('explosion-zone');
+            const cores = ['#ff0055', '#ff5500', '#00ff88', '#00bcff', '#ffcc00', '#ffffff'];
+            const totalParticulas = 50;
+
+            for (let i = 0; i < totalParticulas; i++) {
+                const particula = document.createElement('div');
+                particula.classList.add('confetti-particle');
+                
+                particula.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+                if (Math.random() > 0.5) {
+                    particula.style.width = '3px';
+                    particula.style.height = Math.random() * 15 + 10 + 'px';
+                } else {
+                    particula.style.width = Math.random() * 4 + 5 + 'px';
+                    particula.style.height = Math.random() * 4 + 5 + 'px';
+                }
+
+                const angulo = Math.random() * Math.PI * 2;
+                const raio = Math.random() * 130 + 40; 
+                
+                const destinoX = `calc(50% + ${Math.cos(angulo) * raio}px)`;
+                const destinoY = `calc(50% + ${Math.sin(angulo) * (raio * 0.8)}px)`;
+                const FinalRot = (Math.random() * 720 - 360) + 'deg';
+
+                particula.style.setProperty('--x', destinoX);
+                particula.style.setProperty('--y', destinoY);
+                particula.style.setProperty('--r', `${FinalRot}`);
+                particula.style.animationDelay = (Math.random() * 0.05) + 's';
+
+                zona.appendChild(particula);
+                setTimeout(() => particula.remove(), 1800);
+            }
+        }
+
+        // Transição e processamento após os 5 segundos
+        setTimeout(() => {
+            gerarValorBonus();
+            
+            document.getElementById('panel-processing').style.display = 'none';
+            document.getElementById('panel-success').style.display = 'block';
+            
+            criarExplosaoFocada();
+            tocarSomExplosao();
+
+            let tempoRestante = 10;
+            const avisoTimer = document.getElementById('countdown-text');
+            
+            const intervalo = setInterval(() => {
+                tempoRestante--;
+                if (tempoRestante > 0) {
+                    avisoTimer.innerText = `Redirecionando automaticamente em ${tempoRestante} segundos...`;
+                } else {
+                    clearInterval(intervalo);
+                }
+            }, 1000);
+
+            // Redirecionamento automático de segurança (mesma janela)
+            setTimeout(() => {
+                window.location.href = linkAfiliado;
+            }, 10000);
+
+        }, 5000);
+    </script>
+
+
+
+</body></html>
