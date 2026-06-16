@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecionando...</title>
+
+  <!-- ================================================================= -->
+  <!--  >>> COLE AQUI O SEU LINK DE CHECKOUT / VENDAS <<<                -->
+  <!-- ================================================================= -->
+  <script>
+    const LINK_DESTINO = "https://cole-seu-link-aqui.com";
+  </script>
+  <!-- ================================================================= -->
+
+  <script>
+    (function () {
+      var base = LINK_DESTINO;
+
+      // Pega os parâmetros da URL atual (utm_source, utm_campaign, fbclid, etc.)
+      var params = window.location.search; // ex: "?utm_source=fb&utm_campaign=teste"
+
+      var destino = base;
+      if (params && params.length > 1) {
+        // junta com "?" se o link nao tiver, ou com "&" se ja tiver
+        destino += (base.indexOf("?") === -1 ? "?" : "&") + params.substring(1);
+      }
+
+      // Redireciona na hora, sem tela e sem voltar no botao "voltar"
+      window.location.replace(destino);
+    })();
+  </script>
+</head>
+<body></body>
+</html>
