@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Aviator Studio</title>
+    <style>
+        /* Animações */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(92, 184, 92, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(92, 184, 92, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(92, 184, 92, 0);
+            }
+        }
+
+        @keyframes fly-in {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilo Principal */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+            animation: fly-in 1s ease-out;
+        }
+        .aviator-title {
+            font-size: 3.5em;
+            font-weight: 900;
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 1);
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            line-height: 1;
+        }
+        h1 {
+            color: white;
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+        p {
+            color: #ccc;
+            font-size: 1.1em;
+        }
+        #countdown {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.2em;
+        }
+        .register-button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3em;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        .register-button:hover {
+            background-color: #4cae4c;
+            box-shadow: 0 0 15px rgba(92, 184, 92, 0.9);
+        }
+
+        /* Estilo para a notificação flutuante */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+            transform: translateX(-100%);
+            border-left: 5px solid #ffcc00; /* Borda amarela Aviator */
+            font-family: Arial, sans-serif;
+            font-size: 0.9em;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification-name {
+            font-weight: bold;
+            color: #5cb85c; /* Cor verde para o nome */
+        }
+
+        .notification-flights {
+            font-weight: bold;
+            color: #ffcc00; /* Cor amarela para os voos grátis */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="aviator-title">AVIATOR</div>
+        <h1>🎉 PARABÉNS! 🎉
+            VOCÊ GANHOU 5000 MZN</h1>
+        <p>CRIE SUA CONTA AGORA E COMECE A JOGAR <span id="countdown"> 10 </span> E FAZ UM DEPOSITO DE NO MINIMO 100MT OU 200MT NO SEU PRIMEIRO DEPOSITO.</p>
+        <!-- O botão é um link que leva diretamente ao URL, caso o usuário clique antes do redirecionamento automático -->
+        <a href= "https://affiliates.megagamelive.com/click?campaign_id=2&ref_id=1937&lp=1" class="register-button" id="registerButton">REGISTRE-SE AGORA</a>
+    </div>
+
+    <script>
+        const REDIRECT_URL = "https://affiliates.megagamelive.com/click?campaign_id=2&ref_id=1937&lp=1";
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        // Função de contagem regressiva e redirecionamento
+        function updateCountdown() {
+            countdownElement.textContent = countdown;
+            if (countdown === 0) {
+                // Redirecionamento automático
+                window.location.href = REDIRECT_URL;
+            } else {
+                countdown--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+
+        // --- Script para Notificações Flutuantes Aleatórias ---
+
+        const firstNames = ["João", "Carlos", "Pedro", "Luís", "Miguel", "Ricardo", "André", "Fábio", "Tiago", "Rui", "Ana", "Maria", "Sofia", "Inês", "Beatriz", "Mariana", "Catarina", "Joana", "Patrícia", "Sara"];
+        const lastNames = ["Silva", "Santos", "Oliveira", "Pereira", "Rodrigues", "Almeida", "Costa", "Martins", "Jesus", "Sousa", "Fernandes", "Gomes", "Lopes", "Ribeiro", "Carvalho", "Teixeira", "Mendes", "Nunes", "Soares", "Vieira"];
+        const flightCounts = [25, 50, 75, 100, 150, 200]; // Voos grátis aleatórios
+
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function generateRandomNotification() {
+            const name = getRandomElement(firstNames) + " " + getRandomElement(lastNames);
+            const flights = getRandomElement(flightCounts);
+            return `<span class="notification-name">${name}</span> acabou de se registrar e recebeu <span class="notification-flights">${flights} Voos Grátis!</span>`;
+        }
+
+        function showNotification() {
+            const notificationDiv = document.createElement('div');
+            notificationDiv.className = 'notification';
+            notificationDiv.innerHTML = generateRandomNotification();
+            document.body.appendChild(notificationDiv);
+
+            // Mostrar a notificação
+            setTimeout(() => {
+                notificationDiv.classList.add('show');
+            }, 100);
+
+            // Esconder e remover a notificação após 5 segundos
+            setTimeout(() => {
+                notificationDiv.classList.remove('show');
+                // Remover o elemento após a transição de saída
+                setTimeout(() => {
+                    notificationDiv.remove();
+                }, 500);
+            }, 5000);
+        }
+
+        function startNotificationInterval() {
+            // Mostra uma notificação a cada 5 a 15 segundos (aleatório)
+            const randomInterval = Math.random() * (15000 - 5000) + 5000;
+            showNotification();
+            setTimeout(startNotificationInterval, randomInterval);
+        }
+
+        // Inicia a contagem regressiva e as notificações ao carregar a página
+        window.onload = function() {
+            setTimeout(updateCountdown, 1000);
+            startNotificationInterval();
+        };
+    </script>
+</body>
+</html>
